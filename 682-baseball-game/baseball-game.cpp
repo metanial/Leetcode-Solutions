@@ -14,8 +14,7 @@ public:
                 score += final[j++];
             } else if(operations[i] == "C") {
                 final.pop_back();
-                j--;
-                score -= final[j];
+                score -= final[--j];
             } else {
                 final.push_back(stoi(operations[i]));
                 score += final[j++];
