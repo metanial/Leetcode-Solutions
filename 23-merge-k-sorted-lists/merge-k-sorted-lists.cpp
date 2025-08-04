@@ -12,8 +12,9 @@ class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         int size = lists.size();
-        ListNode* mergedList = new ListNode(-1);
-        ListNode* head = mergedList;
+        ListNode *mergedList = new ListNode(-1);
+        ListNode *head = mergedList;
+
         while(true) {
             int smallIdx = -1;
             int smallVal = INT_MAX;
