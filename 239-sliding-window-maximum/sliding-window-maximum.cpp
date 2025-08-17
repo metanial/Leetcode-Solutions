@@ -1,31 +1,29 @@
 class Solution {
 public:
-    int findMaxIdx(vector<int>& nums, int s, int e) {
-        int maxx = INT_MIN, maxidx = -1;
-        for(int i=s; i<=e; i++) {
-            if(nums[i] >= maxx) {
-                maxx = nums[i];
-                maxidx = i;
-            }
+    // function to find max index within range
+    int maxIndex(vector<int>& nums, int low, int high) {
+        int currMaxIndex = low;
+        for(int i = low+1; i <= high; i++) {
+            if(nums[i] >= nums[currMaxIndex]) currMaxIndex = i;
         }
-        return maxidx;
+        return currMaxIndex;
     }
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        if(k==1) return nums;
         int size = nums.size();
+        if(size == 0 || k == 0) return {};
         vector<int> maxWindow;
+        int currMaxIndex = maxIndex(nums, 0, k-1);
+        maxWindow.push_back(nums[currMaxIndex]);
 
-        int maxidx = findMaxIdx(nums, 0, k-1);
-        maxWindow.push_back(nums[maxidx]);
-
-        for(int i=k-1; i<size-1; i++) {
-            if(nums[i+1] >= nums[maxidx]) {
-                maxidx = i+1;
-            } else if(i-k+1 == maxidx) {
-                maxidx = findMaxIdx(nums, i-k+2, i+1);
+        for(int i = k; i < size; i++) {
+            if(nums[i] >= nums[currMaxIndex]) {
+                currMaxIndex = i;
+            } else if(i-k == currMaxIndex) {
+                currMaxIndex = maxIndex(nums, i-k+1, i);
             }
-            maxWindow.push_back(nums[maxidx]);
+            maxWindow.push_back(nums[currMaxIndex]);
         }
         return maxWindow;
+
     }
 };
